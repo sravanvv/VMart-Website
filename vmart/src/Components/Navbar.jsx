@@ -1,93 +1,95 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { FaBars, FaTimes } from "react-icons/fa";
 
-export default function Navbar() {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  // Toggle mobile menu
+  const toggleMenu = () => setIsOpen(!isOpen);
+
+  // Scroll effect for background color
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true); // Change state if scrolled more than 50px
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
-    <nav className="bg-gray-800">
+    <nav
+      className={`${
+        scrolled
+          ? "bg-gradient-to-r from-blue-800 via-teal-600 to-green-500 shadow-lg"
+          : "bg-gradient-to-r from-purple-700 via-pink-500 to-yellow-400"
+      } transition-all duration-300 ease-in-out sticky top-0 z-50`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <a href="/" className="text-white text-xl font-bold">
-            Pro: Rathnamaiah
-          </a>
-          <a href="/" className="text-white font-bold text-3xl font-bold">
-            V Mart
-          </a>
-          <div className="hidden sm:flex items-center space-x-4">
-            <a
-              href=""
-              className="text-white px-3 py-2 rounded-md hover:bg-gray-700"
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2">
+            <div className="text-white text-2xl font-extrabold tracking-wider drop-shadow-lg">
+              🌟 V Mart
+            </div>
+          </Link>
+
+          {/* Desktop Menu */}
+          <div className="hidden sm:flex space-x-6 text-white font-semibold text-lg">
+            <Link
+              to="/"
+              className="hover:text-yellow-200 transition duration-300"
             >
               Home
-            </a>
-            <a
-              href=""
-              className="text-white px-3 py-2 rounded-md hover:bg-gray-700"
+            </Link>
+            <Link
+              to="/about"
+              className="hover:text-yellow-200 transition duration-300"
             >
               About
-            </a>
-            {/* <a
-              href=""
-              className="text-white px-3 py-2 rounded-md hover:bg-gray-700"
+            </Link>
+            {/* <Link
+              to="/admin"
+              className="hover:text-yellow-200 transition duration-300"
             >
               Admin
-            </a> */}
+            </Link> */}
           </div>
-          <div className="flex items-center sm:hidden">
-            <button
-              type="button"
-              onClick={toggleMenu}
-              className="text-white hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white"
-            >
-              <svg
-                className="w-5 h-5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 17 14"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M1 1h15M1 7h15M1 13h15"
-                />
-              </svg>
+
+          {/* Mobile Menu Toggle */}
+          <div className="sm:hidden">
+            <button onClick={toggleMenu} className="text-white text-2xl focus:outline-none">
+              {isOpen ? <FaTimes /> : <FaBars />}
             </button>
           </div>
         </div>
-
-        {/* Mobile Menu (Visible only when isOpen is true) */}
-        <div
-          className={`absolute top-16 left-0 w-full bg-gray-800 z-50 transition duration-300 ease-in-out ${
-            isOpen ? "flex" : "hidden"
-          } flex-row justify-around items-center space-x-4 sm:hidden`}
-        >
-          <a
-            href=""
-            className="text-white px-3 py-2 rounded-md hover:bg-gray-700"
-          >
-            Home
-          </a>
-          <a
-            href=""
-            className="text-white px-3 py-2 rounded-md hover:bg-gray-700"
-          >
-            About
-          </a>
-          {/* <a
-            href=""
-            className="text-white px-3 py-2 rounded-md hover:bg-gray-700"
-          >
-            Admin
-          </a> */}
-        </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="sm:hidden bg-gradient-to-br from-teal-600 via-blue-400 to-green-300 p-4 space-y-4 text-center font-semibold text-white shadow-md rounded-b-2xl transition-all duration-300 ease-in-out">
+          <Link to="/" onClick={() => setIsOpen(false)} className="block hover:text-pink-500">
+            Home
+          </Link>
+          <Link to="/about" onClick={() => setIsOpen(false)} className="block hover:text-pink-500">
+            About
+          </Link>
+          {/* <Link to="/admin" onClick={() => setIsOpen(false)} className="block hover:text-pink-500">
+            Admin
+          </Link> */}
+        </div>
+      )}
     </nav>
   );
-}
+};
+
+export default Navbar;

@@ -1,13 +1,19 @@
 import DiscountProducts from "./Components/DiscountProducts";
 import "./index.css";
 import Navbar from "./Components/Navbar";
+import About from "./Components/About";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="container mx-auto">
-      <Navbar />
-      {/* <h1 className="text-3xl font-bold mb-6 text-center p-2">V Mart</h1> */}
-      <DiscountProducts />
+      <BrowserRouter>
+        <Navbar></Navbar>
+        <Routes>
+          <Route path="/about" element={<About />}></Route>
+          <Route path="/" element={<DiscountProducts />}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
