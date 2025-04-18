@@ -6,7 +6,7 @@ function App() {
   return (
     <div className="container mx-auto">
       <Navbar />
-      <h1 className="text-3xl font-bold mb-6 text-center p-2">V Mart</h1>
+      {/* <h1 className="text-3xl font-bold mb-6 text-center p-2">V Mart</h1> */}
       <DiscountProducts />
     </div>
   );

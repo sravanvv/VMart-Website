@@ -14,7 +14,7 @@ export default function Navbar() {
           <a href="/" className="text-white text-xl font-bold">
             Pro: Rathnamaiah
           </a>
-          <a href="/" className="text-white text-xl font-bold">
+          <a href="/" className="text-white font-bold text-3xl font-bold">
             V Mart
           </a>
           <div className="hidden sm:flex items-center space-x-4">
@@ -30,12 +30,12 @@ export default function Navbar() {
             >
               About
             </a>
-            <a
+            {/* <a
               href=""
               className="text-white px-3 py-2 rounded-md hover:bg-gray-700"
             >
               Admin
-            </a>
+            </a> */}
           </div>
           <div className="flex items-center sm:hidden">
             <button
@@ -80,12 +80,12 @@ export default function Navbar() {
           >
             About
           </a>
-          <a
+          {/* <a
             href=""
             className="text-white px-3 py-2 rounded-md hover:bg-gray-700"
           >
             Admin
-          </a>
+          </a> */}
         </div>
       </div>
     </nav>
